@@ -5,6 +5,7 @@ import '/config/api_state.dart';
 import '/config/global_color.dart';
 import '/config/global_text_style.dart';
 import '/screen/login/controller/login_controller.dart';
+import 'package:flutter/services.dart'; // Import for additional validation
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,6 +19,45 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
   final loginCtl = Get.find<LoginController>();
+
+  // Validation function for email and password
+  bool _validateInputs() {
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    // Check if email is empty
+    if (email.isEmpty) {
+      _showError("Vui lòng nhập email.");
+      return false;
+    }
+
+    // Check if email format is correct
+    final emailRegex = RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+    if (!emailRegex.hasMatch(email)) {
+      _showError("Email không hợp lệ.");
+      return false;
+    }
+
+    // Check if password is empty
+    if (password.isEmpty) {
+      _showError("Vui lòng nhập mật khẩu.");
+      return false;
+    }
+
+    // Check password length
+    if (password.length < 6) {
+      _showError("Mật khẩu phải có ít nhất 6 ký tự.");
+      return false;
+    }
+
+    return true;
+  }
+
+  // Function to show error message
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,8 +235,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         child: ElevatedButton(
                           onPressed: () {
-                            loginCtl.login(_emailController.text,
-                                _passwordController.text, context);
+                            // Validate before login
+                            if (_validateInputs()) {
+                              loginCtl.login(_emailController.text,
+                                  _passwordController.text, context);
+                            }
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: GlobalColors.primary,
@@ -212,7 +255,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 20),
-                   
                     ],
                   ),
                 ),

@@ -6,10 +6,12 @@ import 'package:quanlydiem_admin/screen/classes/classes_screen.dart';
 import 'package:quanlydiem_admin/screen/classes_grade_summary/classes_grade_summary_screen.dart';
 import 'package:quanlydiem_admin/screen/grade_summary/grade_summary.dart';
 import 'package:quanlydiem_admin/screen/home/home_page.dart';
+import 'package:quanlydiem_admin/screen/login/login_screen.dart';
 import 'package:quanlydiem_admin/screen/notification/notification.dart';
 import 'package:quanlydiem_admin/screen/setting/setting_screen.dart';
 import 'package:quanlydiem_admin/screen/subject/subject.dart';
 import 'package:quanlydiem_admin/screen/teacher/teacher_screen.dart';
+import 'package:quanlydiem_admin/util/preferences_util.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class SidebarApp extends StatelessWidget {
@@ -178,6 +180,18 @@ class ExampleSidebarX extends StatelessWidget {
           icon: Icons.settings_outlined,
           label: 'Cài đặt',
         ),
+        SidebarXItem(
+          icon: Icons.logout,
+          label: 'Đăng xuất',
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()),
+            );
+            PreferencesUtil.removePassword();
+            PreferencesUtil.removeEmail();
+          },
+        ),
       ],
     );
   }
@@ -219,6 +233,7 @@ class _ScreensExample extends StatelessWidget {
             return const NotificationScreen();
           case 7:
             return SettingScreen();
+
           default:
             return Text(
               pageTitle,
@@ -245,6 +260,8 @@ String _getTitleByIndex(int index) {
     case 5:
       return 'Settings';
     case 6:
+      return 'Notifications';
+    case 8:
       return 'Notifications';
     default:
       return 'Not found page';
