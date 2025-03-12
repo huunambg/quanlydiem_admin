@@ -1,5 +1,5 @@
 
-import 'package:get/get.dart';
+
 import 'check_network.dart';
 
 void tapAndCheckInternet(Function onPress){

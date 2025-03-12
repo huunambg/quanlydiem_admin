@@ -37,7 +37,6 @@ class _SubjectScreenState extends State<SubjectScreen> {
               );
             case ApiState.success:
               return GridView.builder(
-                scrollDirection: Axis.vertical,
                 padding: const EdgeInsets.all(16),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4,
@@ -47,7 +46,9 @@ class _SubjectScreenState extends State<SubjectScreen> {
                 itemBuilder: (context, index) {
                   Subject subject = subjectCtl.listSubject[index];
                   return GestureDetector(
-                    onTap: () => Get.to(ClassesGradeScreen(subject: subject,)),
+                    onTap: () => Get.to(ClassesGradeScreen(
+                      subject: subject,
+                    )),
                     child: Card(
                       child: Column(
                         children: [

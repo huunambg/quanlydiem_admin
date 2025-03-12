@@ -5,6 +5,7 @@ import 'package:quanlydiem_admin/screen/setting/setting_controller.dart';
 import 'package:quanlydiem_admin/screen/splash/controller/splash_controller.dart';
 import 'package:quanlydiem_admin/screen/student/controller/student_controller.dart';
 import 'package:quanlydiem_admin/screen/subject/controller/subject_controller.dart';
+import 'package:quanlydiem_admin/screen/teacher/teacher_controller.dart';
 import '/util/preferences_util.dart';
 import 'package:get/get.dart';
 import 'screen/grade_one_subject/controller/grade_one_subject_controller.dart';
@@ -33,4 +34,6 @@ Future<void> init() async {
   Get.lazyPut(() => settingController, fenix: true);
   final summaryGradeController = SummaryGradeController();
   Get.lazyPut(() => summaryGradeController, fenix: true);
+    final teacherController = TeacherController();
+  Get.lazyPut(() => teacherController, fenix: true);
 }

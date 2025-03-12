@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:quanlydiem_admin/model/notification.dart';
 import 'package:quanlydiem_admin/model/summary.dart';
 import 'package:quanlydiem_admin/model/teacher.dart';
+import 'package:quanlydiem_admin/model/teacher_admin.dart';
 import '/model/acount.dart';
 import '/model/class.dart';
 import '/model/grade.dart';
@@ -15,7 +16,7 @@ class ApiService {
   final String baseUrl;
   ApiService()
       : baseUrl =
-            "http://192.168.100.15:3000/public/api"; // Thay bằng URL của bạn
+            "http://192.168.43.7:3000/public/api"; // Thay bằng URL của bạn
 
   Future<dynamic> login(Account account) async {
     final url = Uri.parse('$baseUrl/login');
@@ -55,6 +56,67 @@ class ApiService {
       // Lỗi mạng hoặc các lỗi không xác định
       print("Network error: $e");
       throw "Unable to connect to server. Please check your internet connection.";
+    }
+  }
+
+  Future<void> deleteTeacher(TeacherAdmin teacher) async {
+    final url = Uri.parse('$baseUrl/delete-user/${teacher.userId}');
+    print(url);
+    try {
+      final response = await http.delete(url, headers: {});
+      print(
+          "deleteTeacher ${jsonDecode(response.body)['data']}");
+      if (response.statusCode == 200) {
+      } else {
+        throw "cập nhật deleteTeacher.";
+      }
+    } catch (e) {
+      print("deleteTeacher: $e");
+      throw "Lỗi kết nối tới máy chủ.";
+    }
+  }
+
+  Future<void> updateTeacher(TeacherAdmin teacher) async {
+    final url = Uri.parse('$baseUrl/update-user/${teacher.userId}');
+    print(url);
+    try {
+      final response = await http.put(url, headers: {}, body: teacher.toJson());
+      print(
+          "getStudupdateTeacherentByClass ${jsonDecode(response.body)['data']}");
+      if (response.statusCode == 200) {
+      } else {
+        throw "cập nhật updateTeacher.";
+      }
+    } catch (e) {
+      print("Network error: $e");
+      throw "Lỗi kết nối tới máy chủ.";
+    }
+  }
+
+  Future<List<TeacherAdmin>> getAllTeacherAdmin() async {
+    final url = Uri.parse('$baseUrl/get-all-teacher-admin');
+    print(url);
+    try {
+      final response = await http.get(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      );
+      print("getAllTeacherAdmin ${jsonDecode(response.body)['data']}");
+      if (response.statusCode == 200) {
+        List<dynamic> listData = jsonDecode(response.body)['data'];
+        List<TeacherAdmin> listClass = listData
+            .map(
+              (e) => TeacherAdmin.fromJson(e),
+            )
+            .toList();
+        return listClass;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      return [];
     }
   }
 

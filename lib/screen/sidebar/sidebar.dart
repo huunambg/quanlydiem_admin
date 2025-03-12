@@ -5,9 +5,11 @@ import 'package:quanlydiem_admin/model/summary.dart';
 import 'package:quanlydiem_admin/screen/classes/classes_screen.dart';
 import 'package:quanlydiem_admin/screen/classes_grade_summary/classes_grade_summary_screen.dart';
 import 'package:quanlydiem_admin/screen/grade_summary/grade_summary.dart';
+import 'package:quanlydiem_admin/screen/home/home_page.dart';
 import 'package:quanlydiem_admin/screen/notification/notification.dart';
 import 'package:quanlydiem_admin/screen/setting/setting_screen.dart';
 import 'package:quanlydiem_admin/screen/subject/subject.dart';
+import 'package:quanlydiem_admin/screen/teacher/teacher_screen.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class SidebarApp extends StatelessWidget {
@@ -143,7 +145,7 @@ class ExampleSidebarX extends StatelessWidget {
           ),
         );
       },
-      items: const [
+      items: [
         SidebarXItem(
           icon: Icons.dashboard,
           label: 'Trang chủ',
@@ -163,6 +165,10 @@ class ExampleSidebarX extends StatelessWidget {
         SidebarXItem(
           icon: Icons.grade_outlined,
           label: 'Bảng điểm tổng kết',
+        ),
+        SidebarXItem(
+          icon: Icons.person,
+          label: 'Giáo viên',
         ),
         SidebarXItem(
           icon: Icons.notifications,
@@ -194,10 +200,7 @@ class _ScreensExample extends StatelessWidget {
         final pageTitle = _getTitleByIndex(controller.selectedIndex);
         switch (controller.selectedIndex) {
           case 0:
-            return Text(
-              pageTitle,
-              style: theme.textTheme.headlineSmall,
-            );
+            return DashboardPage();
           case 1:
             return const ClassesScreen(
               isTabClass: true,
@@ -211,8 +214,10 @@ class _ScreensExample extends StatelessWidget {
           case 4:
             return const ClassesGradeSummaryScreen();
           case 5:
-            return const NotificationScreen();
+            return const TeacherScreen();
           case 6:
+            return const NotificationScreen();
+          case 7:
             return SettingScreen();
           default:
             return Text(
