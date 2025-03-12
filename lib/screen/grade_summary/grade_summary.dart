@@ -179,7 +179,7 @@ class _GradeSummaryScreenState extends State<GradeSummaryScreen> {
                         DataCell(Text(
                           grade.tbcmlhkl == null
                               ? ""
-                              : grade.tbcmlhkl.toString(),
+                              : grade.tbcmlhkl.toStringAsFixed(1),
                           style: GlobalTextStyles.font16w600Color8A96B2
                               .copyWith(color: Colors.black),
                         )),
